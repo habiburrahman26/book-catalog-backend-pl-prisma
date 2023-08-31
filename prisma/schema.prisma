@@ -1,0 +1,78 @@
+model User {
+    id               String            @id @default(uuid())
+    name             String
+    email            String            @unique
+    password         String
+    role             Role              @default(CUSTOMER)
+    contactNo        String
+    address          String
+    profileImg       String
+    createdAt        DateTime          @default(now())
+    updatedAt        DateTime          @updatedAt
+    reviewAndRatings ReviewAndRating[]
+    orders            Order[]
+
+    @@map("users")
+}
+
+model Category {
+    id        String   @id @default(uuid())
+    title     String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    books     Book[]
+
+    @@map("categories")
+}
+
+model Book {
+    id              String   @id @default(uuid())
+    title           String
+    author          String
+    price           Float
+    genre           String
+    publicationDate DateTime
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+
+    categoryId       String
+    category         Category          @relation(fields: [categoryId], references: [id])
+    reviewAndRatings ReviewAndRating[]
+
+    @@map("books")
+}
+
+model ReviewAndRating {
+    id        String   @id @default(uuid())
+    review    String
+    rating    Int
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id])
+    bookId String
+    book   Book   @relation(fields: [bookId], references: [id])
+
+    @@map("review_and_ratings")
+}
+
+model Order {
+    id          String   @id @default(uuid())
+    userId      String
+    user        User     @relation(fields: [userId], references: [id])
+    orderdBooks Json
+    status      Status   @default(PENDING)
+    createdAt DateTime @default(now())
+}
+
+enum Role {
+    ADMIN
+    CUSTOMER
+}
+
+enum Status {
+    PENDING
+    SHIPPED
+    DELIVERED
+}
