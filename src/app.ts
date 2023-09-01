@@ -4,6 +4,7 @@ import httpStatus from 'http-status'
 
 import cookieParser from 'cookie-parser'
 import { AppRouter } from './app/routes'
+import globalErrorHandler from './app/middleware/globalErrorHandler'
 
 const app: Application = express()
 
@@ -19,6 +20,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/v1/', AppRouter)
+
+app.use(globalErrorHandler)
 
 //handle not found
 app.use((req: Request, res: Response, next: NextFunction) => {
