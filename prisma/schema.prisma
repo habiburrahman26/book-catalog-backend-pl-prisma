@@ -12,7 +12,7 @@ model User {
     name             String
     email            String            @unique
     password         String
-    role             Role              @default(CUSTOMER)
+    role             Role?              @default(CUSTOMER)
     contactNo        String
     address          String
     profileImg       String
