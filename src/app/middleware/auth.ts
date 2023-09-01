@@ -16,7 +16,6 @@ const auth = (...roles: string[]) => {
       //check token is valid
       const decoded = jwtHelpers.verifyToken(token, config.jwt.secret as Secret)
       req.user = decoded
-
       if (roles.length && !roles.includes(decoded.role))
         throw new ApiError(httpStatus.FORBIDDEN, 'FORBIDDEN access')
 

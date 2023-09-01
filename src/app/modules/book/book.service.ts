@@ -6,3 +6,7 @@ const insertIntoDB = async (payload: Book) => {
     data: payload,
   })
 }
+
+export const bookService = {
+  insertIntoDB,
+}
