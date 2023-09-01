@@ -24,9 +24,9 @@ const registration = async (payload: User): Promise<Partial<User>> => {
       role: true,
       contactNo: true,
       address: true,
+      profileImg: true,
       createdAt: true,
       updatedAt: true,
-      profileImg: true,
     },
   })
 
