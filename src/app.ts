@@ -21,6 +21,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/', AppRouter)
 
+//global error handler
 app.use(globalErrorHandler)
 
 //handle not found
