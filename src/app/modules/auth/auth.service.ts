@@ -55,7 +55,7 @@ const login = async (payload: Auth) => {
   }
 
   const token = jwtHelpers.createToken(
-    { id: user.id, role: user.role },
+    { userId: user.id, role: user.role },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string,
   )

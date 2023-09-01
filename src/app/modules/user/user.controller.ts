@@ -50,7 +50,7 @@ const deleteUserById = catchAsync(async (req: Request, res: Response) => {
 
 const getProfile = catchAsync(async (req: Request, res: Response) => {
   const user = req.user
-  const result = await UserService.getUserById(user?.id)
+  const result = await UserService.getUserById(user?.userId)
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

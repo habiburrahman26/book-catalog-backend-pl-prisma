@@ -1,10 +1,10 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model User {
@@ -12,21 +12,21 @@ model User {
     name             String
     email            String            @unique
     password         String
-    role             Role?              @default(CUSTOMER)
+    role             String
     contactNo        String
     address          String
     profileImg       String
     createdAt        DateTime          @default(now())
     updatedAt        DateTime          @updatedAt
     reviewAndRatings ReviewAndRating[]
-    orders            Order[]
+    orders           Order[]
 
     @@map("users")
 }
 
 model Category {
     id        String   @id @default(uuid())
-    title     String
+    title     String   @unique
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     books     Book[]
@@ -72,12 +72,7 @@ model Order {
     user        User     @relation(fields: [userId], references: [id])
     orderdBooks Json
     status      Status   @default(PENDING)
-    createdAt DateTime @default(now())
-}
-
-enum Role {
-    ADMIN
-    CUSTOMER
+    createdAt   DateTime @default(now())
 }
 
 enum Status {
