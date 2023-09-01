@@ -78,6 +78,7 @@ const deleteUserById = async (id: string): Promise<Partial<User> | null> => {
   return result
 }
 
+
 export const UserService = {
   getAllUser,
   getUserById,
