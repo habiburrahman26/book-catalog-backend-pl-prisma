@@ -18,6 +18,24 @@ const addReview = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const updateReview = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user?.userId
+
+  const result = await reviewAndRatingService.updateReview(
+    req.params.reviewId,
+    userId,
+    req.body,
+  )
+
+  sendResponse(res, {
+    statusCode: httpStatus.CREATED,
+    success: true,
+    message: 'Review updated successfully',
+    data: result,
+  })
+})
+
 export const reviewAndRatingController = {
   addReview,
+  updateReview
 }

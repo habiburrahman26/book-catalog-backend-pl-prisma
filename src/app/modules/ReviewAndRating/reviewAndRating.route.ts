@@ -11,4 +11,10 @@ router.post(
   reviewAndRatingController.addReview,
 )
 
+router.patch(
+  '/:reviewId',
+  auth(ENUM_USER_ROLE.CUSTOMER),
+  reviewAndRatingController.updateReview,
+)
+
 export const reviewAndRatingRoute = router
