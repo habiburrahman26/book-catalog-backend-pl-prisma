@@ -17,6 +17,23 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const getBooksByCategoryId = catchAsync(async (req: Request, res: Response) => {
+  const options = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder'])
+
+  const result = await bookService.getBooksByCategoryId(
+    req.params.categoryId,
+    options,
+  )
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Books with associated category data fetched successfully',
+    meta: result.meta,
+    data: result.data,
+  })
+})
+
 const getAllBooks = catchAsync(async (req: Request, res: Response) => {
   const options = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder'])
   const filters = pick(req.query, bookFilterableFields)
@@ -26,8 +43,9 @@ const getAllBooks = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Book retrieved successfully',
-    data: result,
+    message: 'Books retrieved successfully',
+    meta: result.meta,
+    data: result.data,
   })
 })
 
@@ -70,4 +88,5 @@ export const BookController = {
   getSingleBook,
   updateBook,
   deleteBookById,
+  getBooksByCategoryId
 }

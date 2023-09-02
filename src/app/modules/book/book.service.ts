@@ -10,6 +10,9 @@ import httpStatus from 'http-status'
 const insertIntoDB = async (payload: Book) => {
   return await prisma.book.create({
     data: payload,
+    include: {
+      category: true,
+    },
   })
 }
 
@@ -52,6 +55,9 @@ const getAllBooks = async (
 
   const result = await prisma.book.findMany({
     where: whereConditions,
+    include: {
+      category: true,
+    },
     skip,
     take: limit,
     orderBy: {
@@ -64,9 +70,43 @@ const getAllBooks = async (
   return {
     meta: {
       page,
-      size: 10,
+      size: limit,
       total,
       totalPage: Math.ceil(total / 10),
+    },
+    data: result,
+  }
+}
+
+const getBooksByCategoryId = async (
+  categoryId: string,
+  options: PaginationOptions,
+) => {
+  const { page, limit, skip } = paginationHelpers.calculatePagination(options)
+
+  const result = await prisma.book.findMany({
+    where: {
+      categoryId,
+    },
+    skip,
+    take: limit,
+    include: {
+      category: true,
+    },
+  })
+
+  const total = await prisma.book.count({
+    where: {
+      categoryId,
+    },
+  })
+
+  return {
+    meta: {
+      page,
+      size: limit,
+      total,
+      totalPage: Math.ceil(total / limit),
     },
     data: result,
   }
@@ -76,6 +116,9 @@ const getSingleBook = async (id: string): Promise<Book | null> => {
   const result = await prisma.book.findUnique({
     where: {
       id,
+    },
+    include: {
+      category: true,
     },
   })
 
@@ -91,6 +134,9 @@ const updateBook = async (id: string, payload: Partial<Book>) => {
       id,
     },
     data: payload,
+    include: {
+      category: true,
+    },
   })
   return result
 }
@@ -107,6 +153,7 @@ const deleteBookById = async (id: string): Promise<Book | null> => {
 
 export const bookService = {
   insertIntoDB,
+  getBooksByCategoryId,
   getAllBooks,
   getSingleBook,
   updateBook,

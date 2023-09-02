@@ -14,12 +14,7 @@ router.post(
   BookController.insertIntoDB,
 )
 
-router.get(
-  '/',
-  auth(ENUM_USER_ROLE.ADMIN),
-  validateRequest(BookValidation.create),
-  BookController.getAllBooks,
-)
+router.get('/', BookController.getAllBooks)
 router.get('/:id', BookController.getSingleBook)
 router.patch(
   '/:id',
@@ -28,5 +23,6 @@ router.patch(
   BookController.updateBook,
 )
 router.delete('/:id', auth(ENUM_USER_ROLE.ADMIN), BookController.deleteBookById)
+router.get('/:categoryId/category', BookController.getBooksByCategoryId)
 
 export const bookRoute = router
