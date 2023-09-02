@@ -31,7 +31,23 @@ const getAllOrders = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const getOrderForSpecificUser = catchAsync(
+  async (req: Request, res: Response) => {
+    const userId = req.user?.userId
+
+    const result = await OrderService.getOrderForSpecificUser(userId)
+
+    sendResponse(res, {
+      statusCode: httpStatus.CREATED,
+      success: true,
+      message: 'Order retrieved successfully',
+      data: result,
+    })
+  },
+)
+
 export const OrderController = {
   addOrder,
-  getAllOrders
+  getAllOrders,
+  getOrderForSpecificUser,
 }

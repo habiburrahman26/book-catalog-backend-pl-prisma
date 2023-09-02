@@ -12,7 +12,16 @@ const getAllOrders = async () => {
   return await prisma.order.findMany()
 }
 
+const getOrderForSpecificUser = async (userId: string) => {
+  return await prisma.order.findMany({
+    where: {
+      userId,
+    },
+  })
+}
+
 export const OrderService = {
   addOrder,
   getAllOrders,
+  getOrderForSpecificUser
 }

@@ -12,5 +12,10 @@ router.post(
 )
 
 router.get('/', auth(ENUM_USER_ROLE.ADMIN), OrderController.getAllOrders)
+router.get(
+  '/specific-orders',
+  auth(ENUM_USER_ROLE.CUSTOMER),
+  OrderController.getOrderForSpecificUser,
+)
 
 export const OrderRoute = router
