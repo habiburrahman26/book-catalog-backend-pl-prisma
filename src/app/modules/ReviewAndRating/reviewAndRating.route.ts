@@ -18,5 +18,6 @@ router.patch(
 )
 
 router.get('/:bookId', reviewAndRatingController.getReviewsByBookId)
+router.delete('/:reviewId',auth(ENUM_USER_ROLE.CUSTOMER), reviewAndRatingController.deleteReviewById)
 
 export const reviewAndRatingRoute = router

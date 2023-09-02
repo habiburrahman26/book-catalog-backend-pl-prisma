@@ -28,7 +28,7 @@ const updateReview = catchAsync(async (req: Request, res: Response) => {
   )
 
   sendResponse(res, {
-    statusCode: httpStatus.CREATED,
+    statusCode: httpStatus.OK,
     success: true,
     message: 'Review updated successfully',
     data: result,
@@ -41,9 +41,25 @@ const getReviewsByBookId = catchAsync(async (req: Request, res: Response) => {
   )
 
   sendResponse(res, {
-    statusCode: httpStatus.CREATED,
+    statusCode: httpStatus.OK,
     success: true,
     message: 'Review retrieved successfully',
+    data: result,
+  })
+})
+
+const deleteReviewById = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user?.userId
+
+  const result = await reviewAndRatingService.deleteReviewById(
+    req.params.reviewId,
+    userId,
+  )
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Review deleted successfully',
     data: result,
   })
 })
@@ -51,5 +67,6 @@ const getReviewsByBookId = catchAsync(async (req: Request, res: Response) => {
 export const reviewAndRatingController = {
   addReview,
   updateReview,
-  getReviewsByBookId
+  getReviewsByBookId,
+  deleteReviewById
 }
