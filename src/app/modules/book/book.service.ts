@@ -48,8 +48,6 @@ const getAllBooks = async (
     })
   }
 
-  console.log(filterData['maxPrice'])
-
   const whereConditions: Prisma.BookWhereInput =
     andConditions.length > 0 ? { AND: andConditions } : {}
 
