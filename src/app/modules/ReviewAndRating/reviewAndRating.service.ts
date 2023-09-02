@@ -39,7 +39,18 @@ const updateReview = async (
   })
 }
 
+const getReviewsByBookId = async (bookId: string) => {
+  const result = await prisma.reviewAndRating.findMany({
+    where: {
+      bookId,
+    },
+  })
+
+  return result
+}
+
 export const reviewAndRatingService = {
   addReview,
-  updateReview
+  updateReview,
+  getReviewsByBookId,
 }

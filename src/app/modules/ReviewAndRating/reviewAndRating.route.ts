@@ -12,9 +12,11 @@ router.post(
 )
 
 router.patch(
-  '/:reviewId',
+  '/update-review/:reviewId',
   auth(ENUM_USER_ROLE.CUSTOMER),
   reviewAndRatingController.updateReview,
 )
+
+router.get('/:bookId', reviewAndRatingController.getReviewsByBookId)
 
 export const reviewAndRatingRoute = router
