@@ -3,6 +3,7 @@ import catchAsync from '../../../shared/catchAsync'
 import { OrderService } from './order.service'
 import sendResponse from '../../../shared/sendResponse'
 import httpStatus from 'http-status'
+import { JwtPayload } from 'jsonwebtoken'
 
 const addOrder = catchAsync(async (req: Request, res: Response) => {
   const userId = req.user?.userId
@@ -46,8 +47,25 @@ const getOrderForSpecificUser = catchAsync(
   },
 )
 
+const getOrderById = catchAsync(async (req: Request, res: Response) => {
+  //   const userId = req.user?.userId
+
+  const result = await OrderService.getOrderById(
+    req.params.orderId,
+    req.user as JwtPayload,
+  )
+
+  sendResponse(res, {
+    statusCode: httpStatus.CREATED,
+    success: true,
+    message: 'Order retrieved successfully',
+    data: result,
+  })
+})
+
 export const OrderController = {
   addOrder,
   getAllOrders,
   getOrderForSpecificUser,
+  getOrderById,
 }
