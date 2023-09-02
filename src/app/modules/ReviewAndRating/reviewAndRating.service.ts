@@ -12,9 +12,19 @@ const reviewSelectData = {
   userId: true,
   user: {
     select: {
+      id: true,
       name: true,
       email: true,
       profileImg: true,
+    },
+  },
+  book: {
+    select: {
+      id: true,
+      title: true,
+      author: true,
+      price: true,
+      genre: true,
     },
   },
 }
