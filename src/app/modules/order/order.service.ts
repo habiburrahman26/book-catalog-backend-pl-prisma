@@ -12,16 +12,20 @@ const addOrder = async (payload: any) => {
   })
 }
 
-const getAllOrders = async () => {
-  return await prisma.order.findMany()
-}
+const getAllOrders = async (user: JwtPayload) => {
+  const { userId, role } = user
 
-const getOrderForSpecificUser = async (userId: string) => {
-  return await prisma.order.findMany({
+  if (role === ENUM_USER_ROLE.ADMIN) {
+    return await prisma.order.findMany()
+  }
+
+  const orders = await prisma.order.findMany({
     where: {
       userId,
     },
   })
+
+  return orders
 }
 
 const getOrderById = async (orderId: string, user: JwtPayload) => {
@@ -52,6 +56,5 @@ const getOrderById = async (orderId: string, user: JwtPayload) => {
 export const OrderService = {
   addOrder,
   getAllOrders,
-  getOrderForSpecificUser,
   getOrderById,
 }

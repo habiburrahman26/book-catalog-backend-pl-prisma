@@ -22,7 +22,9 @@ const addOrder = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getAllOrders = catchAsync(async (req: Request, res: Response) => {
-  const result = await OrderService.getAllOrders()
+  const user = req.user as JwtPayload
+
+  const result = await OrderService.getAllOrders(user)
 
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
@@ -32,24 +34,8 @@ const getAllOrders = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
-const getOrderForSpecificUser = catchAsync(
-  async (req: Request, res: Response) => {
-    const userId = req.user?.userId
-
-    const result = await OrderService.getOrderForSpecificUser(userId)
-
-    sendResponse(res, {
-      statusCode: httpStatus.CREATED,
-      success: true,
-      message: 'Order retrieved successfully',
-      data: result,
-    })
-  },
-)
 
 const getOrderById = catchAsync(async (req: Request, res: Response) => {
-  //   const userId = req.user?.userId
-
   const result = await OrderService.getOrderById(
     req.params.orderId,
     req.user as JwtPayload,
@@ -66,6 +52,5 @@ const getOrderById = catchAsync(async (req: Request, res: Response) => {
 export const OrderController = {
   addOrder,
   getAllOrders,
-  getOrderForSpecificUser,
   getOrderById,
 }

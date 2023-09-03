@@ -29,18 +29,8 @@ const addOrder = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 
     });
 }));
 const getAllOrders = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield order_service_1.OrderService.getAllOrders();
-    (0, sendResponse_1.default)(res, {
-        statusCode: http_status_1.default.CREATED,
-        success: true,
-        message: 'Order retrieved successfully',
-        data: result,
-    });
-}));
-const getOrderForSpecificUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b;
-    const userId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.userId;
-    const result = yield order_service_1.OrderService.getOrderForSpecificUser(userId);
+    const user = req.user;
+    const result = yield order_service_1.OrderService.getAllOrders(user);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.CREATED,
         success: true,
@@ -49,7 +39,6 @@ const getOrderForSpecificUser = (0, catchAsync_1.default)((req, res) => __awaite
     });
 }));
 const getOrderById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //   const userId = req.user?.userId
     const result = yield order_service_1.OrderService.getOrderById(req.params.orderId, req.user);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.CREATED,
@@ -61,6 +50,5 @@ const getOrderById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
 exports.OrderController = {
     addOrder,
     getAllOrders,
-    getOrderForSpecificUser,
     getOrderById,
 };

@@ -22,15 +22,18 @@ const addOrder = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         data: payload,
     });
 });
-const getAllOrders = () => __awaiter(void 0, void 0, void 0, function* () {
-    return yield prisma_1.default.order.findMany();
-});
-const getOrderForSpecificUser = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield prisma_1.default.order.findMany({
+const getAllOrders = (user) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId, role } = user;
+    if (role === user_1.ENUM_USER_ROLE.ADMIN) {
+        return yield prisma_1.default.order.findMany();
+    }
+    const orders = yield prisma_1.default.order.findMany({
         where: {
             userId,
         },
     });
+    console.log(orders);
+    return orders;
 });
 const getOrderById = (orderId, user) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId, role } = user;
@@ -52,6 +55,5 @@ const getOrderById = (orderId, user) => __awaiter(void 0, void 0, void 0, functi
 exports.OrderService = {
     addOrder,
     getAllOrders,
-    getOrderForSpecificUser,
     getOrderById,
 };
