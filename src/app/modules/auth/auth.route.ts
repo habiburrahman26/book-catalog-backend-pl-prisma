@@ -12,7 +12,7 @@ router.post(
   AuthController.registration,
 )
 router.post(
-  '/sign-in',
+  '/signin',
   validateRequest(AuthValidation.login),
   AuthController.login,
 )

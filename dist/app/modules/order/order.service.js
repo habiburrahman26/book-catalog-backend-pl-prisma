@@ -32,7 +32,6 @@ const getAllOrders = (user) => __awaiter(void 0, void 0, void 0, function* () {
             userId,
         },
     });
-    console.log(orders);
     return orders;
 });
 const getOrderById = (orderId, user) => __awaiter(void 0, void 0, void 0, function* () {
